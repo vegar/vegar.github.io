@@ -1,0 +1,24 @@
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+
+# Setup
+title:            blog.vi-kan.net
+tagline:          'One thought after another'
+description:      'Some random notes. Mostly related to code.'
+url:              http://vegar.github.io
+
+author:
+  name:           'Vegar Vikan'
+  url:            https://twitter.com/format71
+
+paginate:         5
+
+# Custom vars
+version:          2.0.0
+
+github:
+  repo:           https://github.com/poole/lanyon
