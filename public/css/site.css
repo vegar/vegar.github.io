@@ -1,0 +1,9 @@
+.sidebar-item>img.profile-img {
+    min-width: 80px!important;
+    min-height: 80px!important;
+    max-width: 80px;
+    border-radius: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
