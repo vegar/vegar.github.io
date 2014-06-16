@@ -1,4 +1,4 @@
-.sidebar-item>img.profile-img {
+.sidebar img.profile-img {
     min-width: 80px!important;
     min-height: 80px!important;
     max-width: 80px;
@@ -6,4 +6,10 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.sidebar .fa {
+    width: 1.2857142857142858em;
+    font-size: 22px;
+    vertical-align: middle;
 }
