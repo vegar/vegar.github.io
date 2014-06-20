@@ -11,34 +11,36 @@ I hit one bump in the road earlier this week, though. I have a dependency to a s
 
 Let's say this is my service:
 
-        public interface IMyService
-        {
-            string CalledConstructor { get; }         
-        }
+{% highlight csharp %}  
+public interface IMyService
+{
+    string CalledConstructor { get; }         
+}
 
-        public class MyService : IMyService
-        {
-            public MyService()
-            {
-                CalledConstructor = "MyService()";                
-            }
+public class MyService : IMyService
+{
+    public MyService()
+    {
+        CalledConstructor = "MyService()";                
+    }
 
-            public MyService(string parameterOne)
-            {
-                CalledConstructor = string.Format("MyService(parameterOne: {0}", parameterOne);                
-            }
+    public MyService(string parameterOne)
+    {
+        CalledConstructor = string.Format("MyService(parameterOne: {0}", parameterOne);                
+    }
 
-            public MyService(string parameterOne, string parameterTwo)
-            {
-                CalledConstructor = string.Format("MyService(parameterOne: {0}, parameterTwo: {1}", parameterOne, parameterTwo);
-            }
+    public MyService(string parameterOne, string parameterTwo)
+    {
+        CalledConstructor = string.Format("MyService(parameterOne: {0}, parameterTwo: {1}", parameterOne, parameterTwo);
+    }
 
-            public string CalledConstructor { get; private set; }            
-        }
-
+    public string CalledConstructor { get; private set; }            
+}
+{% endhighlight %}
     
 In the simplest case, we would register the service, and it would resolve using the default constructor:    
 
+```csharp
         [TestMethod]
         public void Resolve_should_use_default_constructor()
         {
@@ -49,6 +51,7 @@ In the simplest case, we would register the service, and it would resolve using 
        
             Assert.AreEqual("MyService()", service.CalledConstructor);
         }
+```
 
 If we need to provide a value for `parameterOne`, we would register that as well:
 
