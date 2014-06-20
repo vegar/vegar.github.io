@@ -19,32 +19,36 @@ If all the numbers from 1 to 1000 (one thousand) inclusive were written out in w
 
 <p>We would need a class that can convert an integer into written words. I will call it WrittenNumber, and give it a class method (NSString *)fromInt:(int) to do the work.</p>
 
-<pre><code>@interface WrittenNumber : NSObject {
+```objective-c
+@interface WrittenNumber : NSObject {
 }
  (NSString *) fromInt:(int)number;
 @end
-</code></pre>
+```
 
 <p>Now, that I got my basic interface in place, I tried it out with the most basic test:</p>
 
-<pre><code>- (void)testSingleDigitOne {
+```objective-c
+- (void)testSingleDigitOne {
     GHAssertEqualStrings([WrittenNumber fromInt:1], @&quot;one&quot;, nil);
 }
-</code></pre>
+```
 
 <p>As expected, it failed :</p>
 
-<pre><code>euler17/testSingleDigitOne ✘ 0.00s
+```
+    euler17/testSingleDigitOne ✘ 0.00s
 
     Name: GHTestFailureException
     File: /../euler17.m
     Line: 40
     Reason: '' should be equal to 'one'.
-</code></pre>
+```
 
 <p>I will not take you through every single step I took, including returning &#8216;one&#8217;, writing a new test and realize that returning &#8216;one&#8217; didn&#8217;t work for other cases and so on… What we need, is to identify every word that we need to build up every number from one to 1000. Up to nineteen, there are all unique words. From there, most written numbers are combined by two or more words. So I put these words into a couple of static arrays:</p>
 
-<pre><code>static NSString * simpleNumbers[] = {
+```objective-c
+static NSString * simpleNumbers[] = {
     @&quot;&quot;, @&quot;one&quot;, @&quot;two&quot;, @&quot;three&quot;, @&quot;four&quot;, @&quot;five&quot;, @&quot;six&quot;, @&quot;seven&quot;, @&quot;eight&quot;, @&quot;nine&quot;,
     @&quot;ten&quot;, @&quot;eleven&quot;, @&quot;twelve&quot;, @&quot;thirteen&quot;, @&quot;fourteen&quot;, @&quot;fifteen&quot;, @&quot;sixteen&quot;, @&quot;seventeen&quot;, @&quot;eighteen&quot;, @&quot;nineteen&quot;
 };
@@ -52,16 +56,17 @@ If all the numbers from 1 to 1000 (one thousand) inclusive were written out in w
 static NSString *tens[] = {
     @&quot;&quot;, @&quot;&quot;, @&quot;twenty&quot;, @&quot;thirty&quot;, @&quot;forty&quot;, @&quot;fifty&quot;, @&quot;sixty&quot;, @&quot;seventy&quot;, @&quot;eighty&quot;, @&quot;ninety&quot;
 };
-</code></pre>
+```
 
 <p>I have padded the &#8216;tens&#8217;-array to make indexing a little easier. tens<a href="http://svn.vi-kan.net/euler">2</a> = &#8220;twenty&#8221;, tens[8] = &#8220;eighty&#8221; and so on. Now, the algorithm that I ended  up with, was to start with the larger part of the number, converting it into text, and then handle the rest in the same way. Peele away the larger part, convert it to text, and repeat.</p>
 
-<pre><code> (NSString *) processSimpleNumbers:(int)number
+```objective-c
+(NSString *) processSimpleNumbers:(int)number
 {
     return simpleNumbers[number];
 }
 
- (NSString *) processTens:(int)number
+(NSString *) processTens:(int)number
 {
     if (number &amp;lt; 20) {
         return [self processSimpleNumbers:number];
@@ -119,7 +124,7 @@ static NSString *tens[] = {
 {
     return [self processThousands:number];
 }
-</code></pre>
+```
 
 <p>I&#8217;m sure there are prettier ways of solving this, but it works. The remaining task, is trivial. Convert each number and accumulate the length of the strings after removing hyphens and spaces. Of cause, we could get rid of these characters right away by not returning them in the first place, but then again, I did not…</p>
 

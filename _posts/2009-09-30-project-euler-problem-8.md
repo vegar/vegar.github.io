@@ -39,7 +39,8 @@ tags:
 
 <p>I start out with the number as a string. That makes it easy to loop through digit by digit.  To make it even easier, I have made an array of five bytes that I place &#8216;over&#8217; the current character. This gives me a &#8216;view&#8217; of the five current digits that needs to be multiplied as bytes instead of characters.</p>
 
-<pre><code>const
+``` pascal
+const
   SUBJECT = '73167176531330624919225119674426574742355349 .... 57530420752963450';
 
 type
@@ -52,29 +53,31 @@ begin
     FiveDigits := @SUBJECT[i];
   end;
 end;
-</code></pre>
+```
 
 <p>A character in the range 0 to 9 has byte value in the range of 48 to 57. Before we multiply the values, we have to normalize them. We can do that by subtracting 48 from each byte value.</p>
 
-<pre><code>const
+``` pascal 
+const
   NULLCHAR = ord('0');
   ...
   present := (FiveDigits[0]-NULLCHAR) * (FiveDigits[1]-NULLCHAR) * (FiveDigits[2]-NULLCHAR) * (FiveDigits[3]-NULLCHAR) * (FiveDigits[4]-NULLCHAR);
-</code></pre>
+```
 
 <p>Now we just have to keep track of the highest produced product do find the answer.</p>
 
-<pre><code>    largest := 0;
+``` pascal
+    largest := 0;
     for I := 1 to length(Subject) - 6 do
     begin
       FiveDigits := @SUBJECT[i];
       present := (FiveDigits[0]-NULLCHAR) * (FiveDigits[1]-NULLCHAR) * (FiveDigits[2]-NULLCHAR) * (FiveDigits[3]-NULLCHAR) * (FiveDigits[4]-NULLCHAR);
-      if present &amp;gt; largest then
+      if present > largest then
       begin
         largest := present;
         position := i;
       end;
     end;
-</code></pre>
+```
 
 <p>As usual, you will find the code at <a href="http://svn.vi-kan.net/euler">http://svn.vi-kan.net/euler</a>.</p>

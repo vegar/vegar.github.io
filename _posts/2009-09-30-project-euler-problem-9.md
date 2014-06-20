@@ -27,33 +27,36 @@ Find the product abc.</p>
 
 <p>Let&#8217;s take a look at the maximum possible values for a, b and c. The fact that a &lt; b &lt; c makes this kind of easy.  Since all three numbers must be positive, c can&#8217;t be larger than 997 to make room for a = 1 and b = 2. The number b can&#8217;t be larger than 499, which makes room for a = 1 and c = 500. And finally, a can&#8217;t be larger than 332, which makes room for b = 333 and c = 335.</p>
 
-<pre><code>    for a := 1 to 332 do
+``` pascal
+    for a := 1 to 332 do
       for b := a 1 to 498 do
         for c := b 1 to 998 do
         begin
           ...
         end;
-</code></pre>
+```
 
 <p>Now, the test it self should be easy:</p>
 
-<pre><code>if (a   b   c = 1000) and (a*a   b*b = c*c) then
+``` pascal
+if (a + b + c = 1000) and (a*a + b*b = c*c) then
   ...
-</code></pre>
+```
 
 <p>We can do one more easy optimization. I our current c makes for a larger sum than 1000, we can break out of the innermost loop. This actually saves us a lot of cycles.</p>
 
-<pre><code>        for c := b 1 to 998 do
+``` pascal
+        for c := b + 1 to 998 do
         begin
-          sum := a   b   c;
-          if (sum) &amp;gt; 1000 then
+          sum := a + b + c;
+          if (sum) > 1000 then
             break;
 
-          if (sum = 1000) and (a*a   b*b = c*c) then
+          if (sum = 1000) and (a*a + b*b = c*c) then
           begin
             ...
           end;
         end;
-</code></pre>
+```
 
 <p>And that&#8217;s it. The complete solution is available as usual. Check it out at <a href="http://svn.vi-kan.net/euler">http://svn.vi-kan.net/euler</a>.</p>

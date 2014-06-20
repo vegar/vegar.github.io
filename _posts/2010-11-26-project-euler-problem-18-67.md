@@ -55,7 +55,8 @@ tags:
 
 <p><img src="http://blog.vi-kan.net/wp-content/uploads/2010/11/problem18_4.jpg" alt="" title="Three last rows added together" />Do you see the pattern? I think we are ready for some code! I started out with a NumberPiramid-class. It has a method for adding a row of numbers, and a method returning the calculated maximum total.</p>
 
-<pre><code>@interface NumberPiramid : NSObject {
+```objective-c
+@interface NumberPiramid : NSObject {
   NSMutableArray *rows;
 }
 
@@ -64,11 +65,12 @@ tags:
 -(int)maximumTotal;
 
 @end
-</code></pre>
+```
 
 <p>The method addRow:stringWithNumbers takes all numbers for one row as a string separated by spaces. The string is split into an array of Number, a class able to hold both the number itself, and the totals for the left and right side.</p>
 
-<pre><code>-(void)addRow:(NSString *)stringWithNumbers;
+``òbjective-c
+-(void)addRow:(NSString *)stringWithNumbers;
 {
   NSArray *numbers = [stringWithNumbers componentsSeparatedByString:@&quot; &quot;];
   NSMutableArray *row = [[NSMutableArray alloc] initWithCapacity:[numbers count]];
@@ -80,11 +82,12 @@ tags:
   [rows addObject:row];
   [row release];
 }
-</code></pre>
+```
 
 <p>So now, we have an array of arrays that we can use to find our total. The method maximumTotal will first traverse the arrays bottom up, adding the numbers one by one, always keeping the larger option. I have given the Number class a convenience method maxSum, that returns the larger number of leftSum and rightSum. When we have reached the top, we have our total.</p>
 
-<pre><code>-(int)maximumTotal;
+```objective-c
+-(int)maximumTotal;
 {
   NSArray *row = [rows lastObject];
   NSArray *prevRow;
@@ -102,7 +105,7 @@ tags:
   Number *top = [row objectAtIndex:0];
   return [top maxSum];
 }
-</code></pre>
+```
 
 <p>And thats all there is. Problem 67 is the exact same problem, but with a larger pyramid. The numbers are given in a textfile, so we need a new method that can read the textfile line by line. Actually, I found it easier to just read the whole file into a string, using NSString initWithContentsOfFile:filename. I then split this string into lines with the same method I use to split a single row.</p>
 

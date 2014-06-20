@@ -16,10 +16,13 @@ There are documentation for all platforms. Lets have a look at [the iOS](http://
 ---
 1. Open the project file QSTodoListViewController.m and in the **viewDidLoad** method, remove the following code that reloads the data into the table:
 
+```objective-c
         [self refresh];
+```
 
 2.  Just after the **viewDidLoad** method, add the following code:  
 
+```objective-c
         - (void)viewDidAppear:(BOOL)animated
         {
             MSClient *client = self.todoService.client;            
@@ -30,11 +33,11 @@ There are documentation for all platforms. Lets have a look at [the iOS](http://
                 [self refresh];
             }];
         }
+```
 
-    <div class="dev-callout"><b>Note</b>
-    <p>If you are using an identity provider other than Facebook, change the value passed to <strong>loginWithProvider</strong> above to one of the following: <em>microsoftaccount</em>, <em>facebook</em>, <em>twitter</em>, <em>google</em>, or <em>windowsazureactivedirectory</em>.</p>
-    </div>
-        
+> **Note**
+> If you are using an identity provider other than Facebook, change the value passed to `loginWithProvider` above to one of the following: _microsoftaccount_, _facebook_, _twitter_, _google_, or _windowsazureactivedirectory_.
+
 3. Press the **Run** button to build the project, start the app in the iPhone emulator, then log-on with your chosen identity provider.
 
     When you are successfully logged-in, the app should run without errors, and you should be able to query Mobile Services and make updates to data.
@@ -45,7 +48,7 @@ The code shows how to authenticate through facebook, and the note states that yo
 
 When I tried this, I got a `401` error with the message
 
-    "Error: Authentication with 'windowsazureactivedirectory' is not supported."
+>"Error: Authentication with 'windowsazureactivedirectory' is not supported."
 
 For some reason I decided to try with `@"aad"` instead, and lo and behold - it worked! 
 
