@@ -82,13 +82,13 @@ The [documentation](http://www.lightinject.net/#toc14) states that
 It [also states](http://www.lightinject.net/#toc4) that
 > If only one named registration exists, LightInject is capable of resolving this as the default service.
 
-So LightInject will fist try to resolve the constructor with the most parameters, which in this case is the one taking two strings. It will then try to resolve each paramter; first by serviceName, then by using the default for the given type. In this case it will find a service called `parameterOne` that it uses for the first parameter, but for the second parameter it want find any service registered with the name `parameterTwo`, so it will try finding one without any name. Since there is only one string instance registered, it will use this as default, even though it was registered with a name.
+So LightInject will first try to resolve the constructor with the most parameters, which in this case is the one taking two strings. It will then try to resolve each parameter; first by serviceName, then by using the default for the given type. In this case it will find a service called `parameterOne` that it uses for the first parameter, but for the second parameter it want find any service registered with the name `parameterTwo`, so it will try finding one without any name. Since there is only one string instance registered, it will use this as default, even though it was registered with a name.
 
 So how can this be solved?
 
 ##1. Hide unwanted constructors  
 
-If a constructor shouldn't be used, there's no need for it. If it's our serice, we could delete the constructor, or change the access modifier. If it's part of an external library, we could inherit it and only expose the one constructor that we need.
+If a constructor shouldn't be used, there's no need for it. If it's our service, we could delete the constructor, or change the access modifier. If it's part of an external library, we could inherit it and only expose the one that we need.
 
         public class MyInheritedService : MyService 
         {
