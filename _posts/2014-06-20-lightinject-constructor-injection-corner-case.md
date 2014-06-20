@@ -71,8 +71,8 @@ And here's where things went wrong for me.
 > Test Name:  FAILS_Resolve_should_use_constructor_with_one_parameter_but_chooses_the_one_with_two
 >
 > **Result Message**: Assert.AreEqual failed.  
-> **Expected**:<MyService(parameterOne: FirstValue>.  
-> **Actual**:<MyService(parameterOne: FirstValue, parameterTwo: FirstValue>.  
+> **Expected**:\<MyService(parameterOne: FirstValue\>.  
+> **Actual**:\<MyService(parameterOne: FirstValue, parameterTwo: FirstValue\>.  
  
 LightInject chose the third constructor, the one taking two parameters, and used the value given to `paramterOne` for both paramters. Why is that?
 
