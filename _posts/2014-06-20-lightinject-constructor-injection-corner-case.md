@@ -11,7 +11,7 @@ I hit one bump in the road earlier this week, though. I have a dependency to a s
 
 Let's say this is my service:
 
-{% highlight csharp %}  
+```csharp
 public interface IMyService
 {
     string CalledConstructor { get; }         
@@ -36,38 +36,40 @@ public class MyService : IMyService
 
     public string CalledConstructor { get; private set; }            
 }
-{% endhighlight %}
+```
     
 In the simplest case, we would register the service, and it would resolve using the default constructor:    
 
 ```csharp
-        [TestMethod]
-        public void Resolve_should_use_default_constructor()
-        {
-            var container = new ServiceContainer();
-            container.Register<IMyService, MyService>();
+[TestMethod]
+public void Resolve_should_use_default_constructor()
+{
+    var container = new ServiceContainer();
+    container.Register<IMyService, MyService>();
 
-            var service = container.GetInstance<IMyService>();
-       
-            Assert.AreEqual("MyService()", service.CalledConstructor);
-        }
+    var service = container.GetInstance<IMyService>();
+   
+    Assert.AreEqual("MyService()", service.CalledConstructor);
+}
 ```
 
 If we need to provide a value for `parameterOne`, we would register that as well:
 
-        [TestMethod]
-        public void FAILS_Resolve_should_use_constructor_with_one_parameter_but_chooses_the_one_with_two()
-        {
-            var container = new ServiceContainer();
-            container.RegisterInstance("FirstValue", "parameterOne");
-            container.Register<IMyService, MyService>();
+```csharp
+[TestMethod]
+public void FAILS_Resolve_should_use_constructor_with_one_parameter_but_chooses_the_one_with_two()
+{
+    var container = new ServiceContainer();
+    container.RegisterInstance("FirstValue", "parameterOne");
+    container.Register<IMyService, MyService>();
 
-            var service = container.GetInstance<IMyService>();
+    var service = container.GetInstance<IMyService>();
 
-            Assert.AreEqual(
-                string.Format("MyService(parameterOne: {0}", "FirstValue"), 
-                service.CalledConstructor);
-        }
+    Assert.AreEqual(
+        string.Format("MyService(parameterOne: {0}", "FirstValue"), 
+        service.CalledConstructor);
+}
+```
 
 And here's where things went wrong for me.
 
@@ -93,43 +95,46 @@ So how can this be solved?
 
 If a constructor shouldn't be used, there's no need for it. If it's our service, we could delete the constructor, or change the access modifier. If it's part of an external library, we could inherit it and only expose the one that we need.
 
-        public class MyInheritedService : MyService 
-        {
-            public MyInheritedService(string parameterOne) : base(parameterOne) { }
-        }
+```csharp
+public class MyInheritedService : MyService 
+{
+    public MyInheritedService(string parameterOne) : base(parameterOne) { }
+}
 
-        [TestMethod]
-        public void Solution_1_hide_constructor()
-        {
-            var container = new ServiceContainer();
-            container.RegisterInstance("FirstValue", "parameterOne");        
-            container.Register<IMyService, MyInheritedService>();
+[TestMethod]
+public void Solution_1_hide_constructor()
+{
+    var container = new ServiceContainer();
+    container.RegisterInstance("FirstValue", "parameterOne");        
+    container.Register<IMyService, MyInheritedService>();
 
-            var service = container.GetInstance<IMyService>();
+    var service = container.GetInstance<IMyService>();
 
-            Assert.AreEqual(
-                string.Format("MyService(parameterOne: {0}", "FirstValue"), 
-                service.CalledConstructor);
-        }
+    Assert.AreEqual(
+        string.Format("MyService(parameterOne: {0}", "FirstValue"), 
+        service.CalledConstructor);
+}
+```
 
 ##2. Register a dummy service
 
 Since this is a problem only when we have just one string instance registered, we could register a second 'dummy' service to prevent the default resolving.
 
-        [TestMethod]
-        public void Solution_2_prevent_resolveing_of_default_service()
-        {
-            var container = new ServiceContainer();
-            container.RegisterInstance("FirstValue", "parameterOne");
-            container.RegisterInstance("dummy", "dummy");
-            container.Register<IMyService, MyService>();
+```csharp
+[TestMethod]
+public void Solution_2_prevent_resolveing_of_default_service()
+{
+    var container = new ServiceContainer();
+    container.RegisterInstance("FirstValue", "parameterOne");
+    container.RegisterInstance("dummy", "dummy");
+    container.Register<IMyService, MyService>();
 
-            var service = container.GetInstance<IMyService>();
+    var service = container.GetInstance<IMyService>();
 
-            Assert.AreEqual(
-                string.Format("MyService(parameterOne: {0}", "FirstValue"), 
-                service.CalledConstructor);
-        }
-
+    Assert.AreEqual(
+        string.Format("MyService(parameterOne: {0}", "FirstValue"), 
+        service.CalledConstructor);
+}
+```
 
 All test cases are available as a [Gist](https://gist.github.com/vegar/fa4e35b557ed37150d43) 
