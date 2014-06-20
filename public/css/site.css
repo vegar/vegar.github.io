@@ -14,6 +14,11 @@
     vertical-align: middle;
 }
 
+pre {
+    border: 1px solid #E9E9E9;
+    padding: .5rem !important;
+}
+
 pre code {
-  font-size: 0.7em; !important;
+  line-height: 1 !important;
 }
