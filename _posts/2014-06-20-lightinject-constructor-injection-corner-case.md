@@ -68,13 +68,13 @@ If we need to provide a value for `parameterOne`, we would register that as well
 
 And here's where things went wrong for me.
 
-> Test Name:  FAILS_Resolve_should_use_constructor_with_one_parameter_but_chooses_the_one_with_two
+> Test Name:  FAILS\_Resolve\_should\_use\_constructor\_with\_one\_parameter\_but\_chooses\_the\_one\_with\_two
 >
 > **Result Message**: Assert.AreEqual failed.  
 > **Expected**:\<MyService(parameterOne: FirstValue\>.  
 > **Actual**:\<MyService(parameterOne: FirstValue, parameterTwo: FirstValue\>.  
  
-LightInject chose the third constructor, the one taking two parameters, and used the value given to `paramterOne` for both paramters. Why is that?
+LightInject chose the third constructor, the one taking two parameters, and used the value given to `parameterOne` for both parameters. Why is that?
 
 The [documentation](http://www.lightinject.net/#toc14) states that
 > Note: In the case where the implementing type(Foo) has more than one constructor, LightInject will choose the constructor with the most parameters.
