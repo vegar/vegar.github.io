@@ -7,7 +7,9 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:site" content="">
+
+  <meta name="twitter:site" content="{{ site.twitter_user }}">
+  <meta name="twitter:creator" content="{{ site.twitter_user }}">
 
   {% if page.title %}
   <meta name="twitter:title" content="{{ page.title }} &middot; {{ site.title }}">
@@ -16,10 +18,10 @@
   {% endif %}
 
   {% if page.excerpt %}
-  <meta name="twitter:description" content="post.excerpt">
+  <meta name="twitter:description" content="{{ page.excerpt | strip_html | xml_escape }}">
   {% endif %}
 
-  <meta name="twitter:creator" content="@format71">
+
   <!--meta name="twitter:image:src" content=""-->
   <!--meta name="twitter:domain" content=""-->
 
