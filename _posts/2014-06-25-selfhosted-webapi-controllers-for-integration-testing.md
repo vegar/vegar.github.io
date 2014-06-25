@@ -55,3 +55,5 @@ So here's a basic xUnit test showing how I can have a controller defined inside 
 ```
 
 By separating the constructor and disposer in to a base class, you can get away with very few lines of code.
+
+There are two nuget packages that you need for this to work. First you will need the [microsoft.aspnet.webapi.owinselfhost v5.1.2](https://www.nuget.org/packages/Microsoft.AspNet.WebApi.OwinSelfHost/) package for the selfhosted WebApi, and then you'll need  [microsoft.owin.testing v2.1](https://www.nuget.org/packages/Microsoft.Owin.Testing/) for the `TestServer`.
