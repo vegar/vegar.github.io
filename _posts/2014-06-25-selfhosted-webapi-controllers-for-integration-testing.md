@@ -5,7 +5,7 @@ title: Self host WebAPI controllers for testing
 
 > TLDR; With the help of `Owin`, `TestServer` and `HttpClient`, you can do a full integration test of your WebApi in memory without deployment to test host.
 
-I had heard perople talking about 'self-hosting' controllers for tests, and last night I manged to get a test rig up and running that I kind of liked.
+I had heard people talking about 'self-hosting' controllers for tests, and last night I manged to get a test rig up and running that I kind of liked.
 
 So normaly, you can unittest your controllers fairly well by just instantiating it and call the methods on it directly. Some times, though, you want to test everything between the client request and the actual action invokation, like authorization attributes and routing etc.
 
