@@ -21,6 +21,7 @@ paginate:         5
 version:          2.0.0
 
 clicky_site_id:   148688
+google_site_id:   'UA-271278-3'
 
 github:
   repo:           https://github.com/poole/lanyon
