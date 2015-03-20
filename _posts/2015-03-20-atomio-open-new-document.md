@@ -43,7 +43,7 @@ execute: ->
     atom.workspace.open('c:\\temp\\temp.txt')
 ```
 
-![](\images\2015\03\temp.txt - Atom.png)
+![](/images/2015/03/temp.txt_-_atom.png)
 
 
 If you do not provide a full URI, just a name, it will use the current projects root folder. If no project is open, you will get a new un-named document.
